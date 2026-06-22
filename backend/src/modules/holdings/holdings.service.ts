@@ -91,7 +91,7 @@ export class HoldingsService {
   private recomputePortfolioValue(portfolioId: number) {
     const total = this.revalueAll(this.holdings.filter((item) => item.portfolioId === portfolioId))
       .reduce((sum, item) => sum + item.currentPrice * item.quantity, 0);
-    this.portfoliosService.setTotalValue(portfolioId, total);
+    this.portfoliosService.setHoldingsValue(portfolioId, total);
   }
 }
 

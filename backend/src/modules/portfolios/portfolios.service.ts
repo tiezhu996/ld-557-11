@@ -12,6 +12,8 @@ export interface PortfolioRecord {
   description: string;
   type: PortfolioType;
   riskLevel: RiskLevel;
+  cashBalance: number;
+  holdingsValue: number;
   totalValue: number;
   createdAt: string;
 }
@@ -19,7 +21,7 @@ export interface PortfolioRecord {
 @Injectable()
 export class PortfoliosService {
   private readonly portfolios: PortfolioRecord[] = [
-    { id: 1, userId: 1, name: '长期价值组合', description: '宽基 ETF + 龙头股票', type: PortfolioType.MIXED, riskLevel: RiskLevel.MODERATE, totalValue: 3000, createdAt: new Date().toISOString() },
+    { id: 1, userId: 1, name: '长期价值组合', description: '宽基 ETF + 龙头股票', type: PortfolioType.MIXED, riskLevel: RiskLevel.MODERATE, cashBalance: 0, holdingsValue: 1952, totalValue: 1952, createdAt: new Date().toISOString() },
   ];
   private nextId = 2;
 
@@ -45,6 +47,8 @@ export class PortfoliosService {
       description: dto.description ?? '',
       type: dto.type,
       riskLevel: dto.riskLevel,
+      cashBalance: 0,
+      holdingsValue: 0,
       totalValue: 0,
       createdAt: new Date().toISOString(),
     };
@@ -63,6 +67,29 @@ export class PortfoliosService {
     const index = this.portfolios.findIndex((item) => item.id === portfolio.id);
     this.portfolios.splice(index, 1);
     return { deleted: true, id };
+  }
+
+  getCashBalance(id: number) {
+    const portfolio = this.portfolios.find((item) => item.id === id);
+    return portfolio ? portfolio.cashBalance : 0;
+  }
+
+  addCash(id: number, amount: number) {
+    const portfolio = this.portfolios.find((item) => item.id === id);
+    if (portfolio) {
+      portfolio.cashBalance = Number((portfolio.cashBalance + amount).toFixed(2));
+      portfolio.totalValue = Number((portfolio.holdingsValue + portfolio.cashBalance).toFixed(2));
+      return portfolio.cashBalance;
+    }
+    return 0;
+  }
+
+  setHoldingsValue(id: number, value: number) {
+    const portfolio = this.portfolios.find((item) => item.id === id);
+    if (portfolio) {
+      portfolio.holdingsValue = Number(value.toFixed(2));
+      portfolio.totalValue = Number((portfolio.holdingsValue + portfolio.cashBalance).toFixed(2));
+    }
   }
 
   setTotalValue(id: number, value: number) {

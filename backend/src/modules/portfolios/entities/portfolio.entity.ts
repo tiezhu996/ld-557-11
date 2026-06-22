@@ -28,6 +28,12 @@ export class Portfolio {
   riskLevel: RiskLevel;
 
   @Column({ type: 'decimal', precision: 18, scale: 2, default: 0 })
+  cashBalance: string;
+
+  @Column({ type: 'decimal', precision: 18, scale: 2, default: 0 })
+  holdingsValue: string;
+
+  @Column({ type: 'decimal', precision: 18, scale: 2, default: 0 })
   totalValue: string;
 
   @CreateDateColumn()

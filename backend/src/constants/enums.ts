@@ -36,3 +36,11 @@ export enum AuditAction {
   DELETE = 'DELETE',
 }
 
+export enum CashFlowType {
+  DEPOSIT = 'DEPOSIT',
+  WITHDRAW = 'WITHDRAW',
+  BUY = 'BUY',
+  SELL = 'SELL',
+  DIVIDEND = 'DIVIDEND',
+}
+

@@ -13,6 +13,7 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuditModule } from './modules/audit/audit.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CashFlowsModule } from './modules/cash-flows/cash-flows.module';
 import { HoldingsModule } from './modules/holdings/holdings.module';
 import { MarketModule } from './modules/market/market.module';
 import { PortfoliosModule } from './modules/portfolios/portfolios.module';
@@ -44,6 +45,7 @@ const databaseImports = process.env.DATABASE_URL
     PortfoliosModule,
     HoldingsModule,
     TransactionsModule,
+    CashFlowsModule,
     MarketModule,
     ReviewsModule,
   ],
